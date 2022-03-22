@@ -1,12 +1,16 @@
 """
-Flask Documentation:     https://flask.palletsprojects.com/
+Flfile Documentation:     https://flfile.palletsprojects.com/
 Jinja2 Documentation:    https://jinja.palletsprojects.com/
 Werkzeug Documentation:  https://werkzeug.palletsprojects.com/
 This file creates your application.
 """
 
-from app import app
-from flask import render_template, request, redirect, url_for
+import os
+from app import app, db
+from flask import flash, render_template, request, redirect, url_for, session, send_from_directory
+from werkzeug.utils import secure_filename
+from app.forms import AddProperty
+from app.models import Property
 
 
 ###
@@ -25,11 +29,53 @@ def about():
     return render_template('about.html', name="Mary Jane")
 
 
+@app.route('/properties/create', methods = ['GET', 'POST'])
+def addproperty():
+    """Render the website's new properties form."""
+
+    formObj =  AddProperty()
+    if request.method == 'GET':
+        return render_template ('addproperty.html', createForm = formObj)
+
+    if request.method == 'POST':
+        if formObj.validate_on_submit():
+            file = request.files['photo']
+            recvFiles = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], recvFiles))
+
+            if file and recvFiles != "":
+                property_add = Property(request.form['title'], request.form['num_bedrooms'], request.form['num_bathrooms'], request.form['location'], request.form['price'],  request.form['property_type'], request.form['description'])
+                db.session.add(property_add)
+                db.session.commit()
+                flash('The property was successfully added!', 'success')
+                return redirect(url_for('properties'))
+    return render_template('addproperty.html', createForm = formObj)
+
+
+@app.route('/properties/')
+def properties():
+    """Render the list of all properties in the database"""
+    if request.method == 'GET':
+        propLst = Property.query.all()
+        return render_template('properties.html', propInfo = propLst)
+
+
+@app.route('/properties/<propertyid>')
+def propertyID(propertyid):
+    """Renders individual properties."""
+    pID = db.session.query(Property).filter(Property.id == propertyid).first()
+    return render_template('about.html', name="Mary Jane")
+
+
+@app.route('/uploads/<filename>')
+def image(filename):
+    return send_from_directory(os.path.join(os.getcwd(), app.config['UPLOAD_FOLDER']), filename)
+
 ###
-# The functions below should be applicable to all Flask apps.
+# The functions below should be applicable to all Flfile apps.
 ###
 
-# Display Flask WTF errors as Flash messages
+# Display Flfile WTF errors as Flash messages
 def flash_errors(form):
     for field, errors in form.errors.items():
         for error in errors:
@@ -65,3 +111,6 @@ def page_not_found(error):
 
 if __name__ == '__main__':
     app.run(debug=True,host="0.0.0.0",port="8080")
+
+
+from app.models import Property

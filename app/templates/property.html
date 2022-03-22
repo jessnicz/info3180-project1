@@ -1,0 +1,26 @@
+{% extends 'base.html' %} 
+
+{% block main %} 
+    
+	<div class = "card">        	
+        <img class="img-top" src="{{url_for('image', filename=property.photo)}}" alt="image"/>
+        <div class = "details">
+	        <h4>{{property.title}}</h4> 
+	        <p class="price">${{property.price}}</p>
+	        <p class="type">{{property.property_type}}</p>
+	        <p>{{property.description}}</p>
+
+	        <div class = "more_details">
+	        	<p>{{property.num_bedrooms}} Bedrooms</p>
+	        	<p>{{property.num_bathrooms}} Bathrooms</p>
+	       	</div>
+	       	
+	        <div class = "more_details">
+	        	<p>{{property.location}}</p>
+	       	</div>
+	       	
+        </div>
+        <a href="{{url_for('propertyID',propertyid=property.id)}}"></a><button class="block" onclick = >Email Realtor</button>
+    </div>    
+    
+    
