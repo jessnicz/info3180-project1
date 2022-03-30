@@ -5,12 +5,12 @@ class Property(db.Model):
 
     __tablename__ = 'property'
 
-    id = db.Column(db.String, primary_key=True, autoincrement= True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement= True)
     title = db.Column(db.String(80))
     description= db.Column(db.String(255))
-    num_bedrooms = db.Column(db.String(5))
-    num_bathrooms = db.Column(db.String(5))
-    price = db.Column(db.String(15))
+    num_bedrooms = db.Column(db.String(80))
+    num_bathrooms = db.Column(db.String(80))
+    price = db.Column(db.String(80))
     property_type = db.Column(db.String(80))
     location = db.Column(db.String(80))
     photo = db.Column(db.String(80))

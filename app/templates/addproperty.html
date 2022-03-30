@@ -1,59 +1,59 @@
 {% extends "base.html" %}
 
 {% block css %}
-<link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
+<link rel="stylesheet" href="{{url_for('static', filename='css/app.css')}}">
 {% endblock %}
 
 {% block main %}
-<form action="{{ url_for('addproperty') }}"  method="POST" enctype="multipart/form-data" class="col-md-8">
+
+<h2>Add New Property</h2>
+<form action="{{url_for('addproperty')}}"  method="POST" enctype="multipart/form-data" class="col-md-8">
   {{ createForm.csrf_token }}
 
-  <h2>Add New Property</h2>
-  
-  <div class = "form-group">
+  <div class="form-group col-md-10">
     {{createForm.title.label}}
     {{createForm.title(class = "form-control")}}
   </div>
-  <div class = "form-group">
+  <div class="form-group col-md-10">
     {{createForm.description.label}}
     {{createForm.description(class_="form-control", **{"rows": "4"})}}
   </div>
-  <div class = "row">
-        <div class = "form-group">
+  <div class="row">
+        <div class = "form-group col-md-5">
           {{createForm.num_bedrooms.label}}
           {{createForm.num_bedrooms(class = "form-control")}}
         </div>
-        <div class = "form-group">
+        <div class="form-group col-md-5">
           {{createForm.num_bathrooms.label}}
           {{createForm.num_bathrooms(class = "form-control")}}
         </div>
       </div>
-      <div class = "row">
-        <div class = "form-group">
+      <div class="row">
+        <div class="form-group col-md-5">
           {{createForm.price.label}}
           {{createForm.price(class = "form-control")}}
         </div>
-          <div class = "form-group">
+          <div class="form-group col-md-5">
             {{createForm.property_type.label}}
             {{createForm.property_type(class = "form-control")}}
           </div>
         </div>
-        <div class = "form-group">
-          {{createForm.photo.label}}
-          {{createForm.photo(class = "form-control")}}
-        </div>
-        <div class = "form-group">
+        <div class="form-group col-md-5">
           {{createForm.location.label}}
           {{createForm.location(class = "form-control")}}
         </div>
+        <div class="form-group col-md-2">
+          {{createForm.photo.label}}
+          {{createForm.photo(class = "custom-file-input")}}
+        </div>
       <br>
         
-        <button type = "submit" name = "submit" class="btn btn-primary col-md-2">Add Property</button>
+        <button type="submit" name="submit" class="btn btn-primary col-md-2.5">Add Property</button>
 </form>
 
 
 {% endblock %}
 
 {% block js %}
-<script src="{{ url_for('static', filename='js/app.min.js') }}" charset="utf-8"></script>
+<script src="{{ url_for('static', filename='js/app.js') }}" charset="utf-8"></script>
 {% endblock %}

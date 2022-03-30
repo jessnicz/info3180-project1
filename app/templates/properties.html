@@ -12,16 +12,15 @@
 <section id = "propertyDetails">
   {% for property in propInfo: %}
   <div class="card" style="width: 18rem;">
-    <img class="card-img-top" src="{{url_for('image', filename=property.photo)}}" alt="property photo"/>
+    <img class="card-img-top" src='{{url_for("image", filename=property.photo)}}' alt="property photo"/>
     <div class="card-body">
       <h5 class="card-title">{{property.title}}</h5>
-      <span><img class="location image" src="{{url_for('static', filename='icons/location.png')}}"/>{{property.location}}</span>
-      <span id="price"> {{property.price}} </span>
+      <span><img class="location_image" src="{{url_for('static', filename='icons/location.png')}}"/>{{property.location}}</span>
+      <div id="price"> {{property.price}} </div>
     </div>
-      <a href= "{{url_for('propertyID', propertyid = property.id)}}" class="btn btn-primary">View Property</a>
+    <a href= "{{url_for('propertyID', propertyid = property.id)}}" class="cardbtn">View Property</a>
   </div>
-
-    {% endfor %}
+  {% endfor %}
 </section>
 
-{% endblock %}
+  {% endblock %}

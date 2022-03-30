@@ -10,3 +10,5 @@ Flask-WTF
 Flask-SQLAlchemy
 Flask-Migrate
 Flask-Login
+psycopg2==2.9.3
+SQLAlchemy==1.4.32
